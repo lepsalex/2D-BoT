@@ -9,6 +9,9 @@ var velocity = Vector2.ZERO
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 
+func _ready():
+	animationTree.active = true
+
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
