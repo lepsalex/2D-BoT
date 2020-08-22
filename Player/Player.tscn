@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -10,7 +10,6 @@ height = 4.0
 [sub_resource type="Animation" id=24]
 resource_name = "AttackDown"
 length = 0.4
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -23,11 +22,24 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 36, 37, 38, 39 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_anim_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=25]
 resource_name = "AttackLeft"
 length = 0.4
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -40,11 +52,24 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 32, 33, 34, 35 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_anim_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=26]
 resource_name = "AttackRight"
 length = 0.4
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -57,11 +82,24 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 24, 25, 26, 27 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_anim_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=27]
 resource_name = "AttackUp"
 length = 0.4
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -73,6 +111,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 28, 29, 30, 31 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_anim_finished"
+} ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -207,6 +259,31 @@ tracks/0/keys = {
 "values": [ 7, 8, 9, 10, 11, 6 ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=28]
+animation = "AttackLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "AttackDown"
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "AttackRight"
+
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "AttackUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=32]
+blend_point_0/node = SubResource( 28 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 29 )
+blend_point_1/pos = Vector2( 0, 1.1 )
+blend_point_2/node = SubResource( 30 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 31 )
+blend_point_3/pos = Vector2( 0, -1.1 )
+min_space = Vector2( -1, -1.1 )
+max_space = Vector2( 1, 1.1 )
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "IdleLeft"
 
@@ -261,14 +338,20 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+
 [sub_resource type="AnimationNodeStateMachine" id=22]
+states/Attack/node = SubResource( 32 )
+states/Attack/position = Vector2( 521, 213 )
 states/Idle/node = SubResource( 14 )
 states/Idle/position = Vector2( 521, 89 )
 states/Run/node = SubResource( 19 )
 states/Run/position = Vector2( 674, 89 )
-transitions = [ "Idle", "Run", SubResource( 20 ), "Run", "Idle", SubResource( 21 ) ]
+transitions = [ "Idle", "Run", SubResource( 20 ), "Run", "Idle", SubResource( 21 ), "Idle", "Attack", SubResource( 33 ), "Attack", "Idle", SubResource( 34 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -223, -72 )
+graph_offset = Vector2( -243, -18 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=23]
 
@@ -279,7 +362,7 @@ script = ExtResource( 1 )
 position = Vector2( 0, -9 )
 texture = ExtResource( 2 )
 hframes = 60
-frame = 24
+frame = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = -1.5708
@@ -303,5 +386,6 @@ anims/RunUp = SubResource( 9 )
 tree_root = SubResource( 22 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 23 )
+parameters/Attack/blend_position = Vector2( 0.0777028, 0.0535399 )
 parameters/Idle/blend_position = Vector2( 0.219595, 0.00836504 )
 parameters/Run/blend_position = Vector2( 0, 0 )
