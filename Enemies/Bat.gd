@@ -4,6 +4,7 @@ export(int) var ACCELERATION = 300
 export(int) var MAX_SPEED = 50
 export(int) var FRICTION = 200
 export(int) var WANDER_TARGET_BUFFER = 5
+export(int) var INVINCIBILITY_TIMER = 0.3
 
 const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
@@ -24,6 +25,7 @@ onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $HurtBox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
+onready var blinkAnimPlayer = $BlinkAnimationPlayer
 
 
 func _ready():
@@ -88,6 +90,7 @@ func pick_random_state(state_list):
 
 
 func _on_HurtBox_area_entered(area):
+	hurtbox.start_invincibility(INVINCIBILITY_TIMER)
 	hurtbox.create_hit_effect()
 	knockback = area.knockback_vector * 120
 	stats.health -= area.damage
@@ -98,3 +101,11 @@ func _on_Stats_no_health():
 	var enemyDeathEffect = EnemyDeathEffect.instance()
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position
+
+
+func _on_HurtBox_invincibility_started():
+	blinkAnimPlayer.play("Start")
+
+
+func _on_HurtBox_invincibility_ended():
+	blinkAnimPlayer.play("Stop")
