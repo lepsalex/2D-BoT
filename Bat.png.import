@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GrassPathTileset.png-909e3ab5023e3550b2ab44e955ab1a5b.stex"
+path="res://.import/Bat.png-fae4cb2c1c7e33edae83e9d07041bd2e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/GrassPathTileset.png"
-dest_files=[ "res://.import/GrassPathTileset.png-909e3ab5023e3550b2ab44e955ab1a5b.stex" ]
+source_file="res://Bat.png"
+dest_files=[ "res://.import/Bat.png-fae4cb2c1c7e33edae83e9d07041bd2e.stex" ]
 
 [params]
 
